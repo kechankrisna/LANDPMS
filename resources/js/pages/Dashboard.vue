@@ -1,3 +1,3 @@
 <template>
-    <h2>hello</h2>
+    <h2>Dashboard page</h2>
 </template>

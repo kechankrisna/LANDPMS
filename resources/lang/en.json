@@ -52,6 +52,10 @@
     },
 
     "form": {
+        "profile":"Profile",
+        "information":"Information",
+        "current_password": "Current Password",
+        "phone": "Phone number",
         "name":"Name",
         "email": "Email",
         "password": "Password",

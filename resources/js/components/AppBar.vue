@@ -56,7 +56,7 @@
             <v-spacer></v-spacer>
 
             
-            <v-btn icon border="right"> <v-icon> mdi-bell </v-icon> </v-btn>
+            <v-btn icon border="right" @click="onOpenNotification"> <v-icon> mdi-bell </v-icon> </v-btn>
             <SwitchLanguage class="pt-5" style="max-width:150px;"/>
             <v-avatar color="accent" size="36" class="mx-2">
                 <span class="white--text headline"> {{ user.name.substr(0, 2) }} </span>
@@ -66,14 +66,34 @@
                 <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on" > <v-icon> mdi-menu-down </v-icon> </v-btn>
                 </template>
-                    <v-list dense>
+                    <v-list dense >
+                        <v-list-item style="text-decoration:none" :to="{'name': 'profile'}" >
+                            <v-list-item-icon> <v-icon> mdi-account-circle </v-icon> </v-list-item-icon>
+                            <v-list-item-title> {{ $t('form.profile') }} </v-list-item-title>
+                        </v-list-item>
                         <v-list-item @click="onLogout">
+                            <v-list-item-icon> <v-icon> mdi-logout-variant </v-icon> </v-list-item-icon>
                             <v-list-item-title> {{ $t('form.logout') }} </v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
-            
         </v-app-bar>
+
+        <v-navigation-drawer v-model="enddrawer" absolute temporary right :width="400"  >
+            <v-list>
+                <v-list-item v-for="(item, index) in 10" :key="index" two-line>
+                    <v-list-item-content>
+                        <v-list-item-title> Notication {{index}} </v-list-item-title>
+                        <v-list-item-subtitle> Secondary text {{index}} </v-list-item-subtitle>
+                    </v-list-item-content>
+                    <v-list-item-action>
+                        <v-btn icon>
+                            <v-icon color="grey lighten-1">mdi-information</v-icon>
+                        </v-btn>
+                    </v-list-item-action>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
 
         <v-snackbar :color="isError ? 'error' : 'success'" v-model="snackbar">
             {{ message }}
@@ -94,6 +114,7 @@ export default {
         return {
             user: {},
             drawer: true,
+            enddrawer:false,
             mini: true,
             snackbar: false,
             isError:false,
@@ -191,7 +212,8 @@ export default {
                     title: "Settings",
                     items: []
                 }
-            ]
+            ],
+            notifications:[]
         };
     },
 
@@ -200,6 +222,9 @@ export default {
     },
 
     methods: {
+        onOpenNotification(){
+            this.enddrawer = !this.enddrawer;
+        },
         getUser(){
             this.user = JSON.parse(localStorage.getItem('user'));
         },

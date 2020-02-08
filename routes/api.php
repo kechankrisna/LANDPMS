@@ -20,8 +20,9 @@ Route::group(['prefix' => 'auth',], function () {
 
     Route::group(['middleware' => 'auth:api',], function () {
         Route::get('logout', 'AuthController@logout');
-        // Route::get('user', 'AuthController@user');
         Route::post('me', 'AuthController@me');
+        Route::post('updateinformation', 'AuthController@updateInformation');
+        Route::post('updatepassword', 'AuthController@updatePassword');
 
         Route::post('sendverify', 'AuthController@sendverify');
         
@@ -29,7 +30,7 @@ Route::group(['prefix' => 'auth',], function () {
 });
 
 Route::group(['prefix' => 'password',], function () {
-     ////reset
+
      Route::post('sendreset', 'PasswordResetController@sendreset');
      Route::get('find/{token}', 'PasswordResetController@find');
      Route::post('reset', 'PasswordResetController@reset');

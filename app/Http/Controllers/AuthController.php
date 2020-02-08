@@ -166,19 +166,38 @@ public function register(Request $request)
         ]);
     }
 
-    // /**
-    //  * Get the authenticated User
-    //  *
-    //  * @return [json] user object
-    //  */
-    // public function user(Request $request)
-    // {
-    //     return response()->json($request->user());
-    // }
+    /**
+     * Get the authenticated User
+     *
+     * @return [json] user object
+     */
 
     public function me(Request $request)
     {
         return new ProfileResource($request->user());
     }
 
+
+    /**
+     * Get the authenticated User
+     *
+     * @return [json] user object
+     */
+
+    public function updateInformation(Request $request)
+    {
+        // return new ProfileResource($request->user());
+    }
+
+
+    /**
+     * Get the authenticated User
+     *
+     * @return [json] user object
+     */
+
+    public function updatePassword(Request $request)
+    {
+        // return new ProfileResource($request->user());
+    }
 }

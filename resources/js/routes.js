@@ -33,6 +33,11 @@ const router = new VueRouter({
                     component: () => import("./pages/Home.vue")
                 },
                 {
+                    path: "/chart",
+                    name: "chart",
+                    component: () => import("./pages/Chart.vue"),
+                },
+                {
                     path: "/dashboard",
                     name: "dashboard",
                     component: () => import("./pages/Dashboard.vue"),
