@@ -7206,11 +7206,6 @@ v-md-date-range-picker@^2.6.0:
     "@material/button" "^0.40.0"
     moment "^2.22.2"
 
-v-offline@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/v-offline/-/v-offline-1.1.0.tgz#f5f739bf8cdade549e6d08af3048c549c5c9f315"
-  integrity sha512-/6tQWt/bvgdGYWF34ghAs4xHQ+vavZ0V2uSULG6XlK132eZ1ST8z/zGEw/hYaTT7lZGL0ekqWmdEfr0jmER6xA==
-
 v8-compile-cache@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.0.3.tgz#00f7494d2ae2b688cfe2899df6ed2c54bef91dbe"

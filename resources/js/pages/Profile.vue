@@ -1,6 +1,10 @@
 <template>
-    <v-app>
-        <v-row>
+<v-app>
+    
+
+     <v-container fluid fill-height class="ma-0 pa-0">
+        <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
+        <v-layout align-center justify-center>
             <v-col cols="12" sm="4">
                 <v-container style="text-align:center;">
                     <v-avatar
@@ -9,7 +13,7 @@
                     >
                         <img src="https://i.picsum.photos/id/1/300/300.jpg" alt="alt">
                     </v-avatar>
-                    <v-btn class="ma-5" color="success">UPLOAD IMAGE</v-btn>
+                    <v-btn class="ma-5" color="success">{{$t("form.upload")}}</v-btn>
                 </v-container>
             </v-col>
             <v-col cols="12" sm="4">
@@ -102,16 +106,27 @@
 
                 </v-tabs>
             </v-col>
-        </v-row>
-    </v-app>
+        </v-layout>
+
+        <v-snackbar :color="isError ? 'error' : 'success'" v-model="snackbar">
+            {{ message }}
+            <v-spacer></v-spacer>
+            <v-btn text @click="snackbar = !snackbar">close</v-btn>
+        </v-snackbar>
+
+     </v-container>
+ </v-app>
 </template>
 
 <script>
 export default {
     data() {
         return {
+            loading:false,
+            snackbar:false,
+            isError: false,
+            message:null,
             tab: 0,
-
             formInformation: {},
             formPassword: {}
         };
@@ -147,8 +162,50 @@ export default {
         onSaveAvatar(){
 
         },
-        onSaveInformation() {},
-        onUpdatePassword() {}
+        onSaveInformation() {
+            axios.post(`/api/auth/updateinformation`, this.formInformation)
+            .then((result) => {
+                // console.log(result)
+                this.loading = false;
+                this.snackbar = true;
+                this.isError = false;
+                this.message = this.$t('form.profile_update');
+
+            }).catch((err) => {
+                this.snackbar = true;
+                this.message = err.response.data.message;
+                this.isError = true;
+                this.loading = false;
+                // console.log(err.response.data.message)
+            });
+        },
+        onUpdatePassword() {
+            if( this.formPassword.password == this.formPassword.password_confirmation ){
+                this.loading = true;
+                axios.post(`/api/auth/updatepassword`, this.formPassword)
+                .then((result) => {
+                    // console.log(result)
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.isError = false;
+                    this.message = this.$t('passwords.update');
+                    setTimeout( function() {
+                        location.reload();
+                    }, 500);
+                }).catch((err) => {
+                    this.snackbar = true;
+                    this.message = err.response.data.message;
+                    this.isError = true;
+                    this.loading = false;
+                    // console.log(err.response.data.message)
+                });
+            }else{
+                 this.snackbar = true;
+                 this.isError = true;
+                 this.message = this.$t('passwords.notmatch');
+            }
+
+        }
     }
 };
 </script>

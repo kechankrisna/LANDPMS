@@ -37,7 +37,6 @@
         "js2excel": "^1.0.1",
         "moment": "^2.24.0",
         "v-md-date-range-picker": "^2.6.0",
-        "v-offline": "^1.1.0",
         "vue-chartjs": "^3.5.0",
         "vue-router-layout": "^0.1.5",
         "vuex-i18n": "^1.13.1"

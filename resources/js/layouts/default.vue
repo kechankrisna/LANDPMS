@@ -2,11 +2,11 @@
     <div>
          <app-bar></app-bar>
         <v-content>
-            <v-container grid-list-xs>
+            <div>
                 <transition name="fade">
                     <router-view></router-view>
                 </transition>
-            </v-container>
+            </div>
          </v-content>
     </div>
 </template>

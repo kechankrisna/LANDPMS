@@ -5,6 +5,7 @@ use App\Http\Resources\ProfileResource;
 use App\Notifications\VerifyEmail;
 use App\User;
 use Carbon\Carbon;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -111,9 +112,8 @@ public function register(Request $request)
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
-            $message = __('auth.failed');
             return response()->json([
-                'message' => $message,
+                'message' => trans("auth.failed"),
             ], 401);
         }
 
@@ -186,7 +186,25 @@ public function register(Request $request)
 
     public function updateInformation(Request $request)
     {
-        // return new ProfileResource($request->user());
+        $user = $request->user();
+        if($user->email != $request->email){
+            $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|string|email|unique:users',
+            ]);
+        }else{
+            $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|string|email',
+            ]);
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->save();
+        return new ProfileResource($request->user());
+        
     }
 
 
@@ -198,6 +216,17 @@ public function register(Request $request)
 
     public function updatePassword(Request $request)
     {
-        // return new ProfileResource($request->user());
+        $user = $request->user();
+        $hashedPassword = User::find($user->id)->password;
+     
+        if(Hash::check( $request->current_password , $hashedPassword)){
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return new ProfileResource($request->user());
+        }else{
+            return response()->json([
+                'message' => trans("auth.token_invalid"),
+            ], 401);
+        }
     }
 }

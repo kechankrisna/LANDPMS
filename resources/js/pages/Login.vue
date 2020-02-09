@@ -9,7 +9,7 @@
                     class="mt-12 my-auto mx-auto"
                 >
                     <v-card-title class="text-center" primary-title>
-                        {{ $t("form.login") }}
+                        {{ $t("form.login") }} 
                     </v-card-title>
                     <v-card-text>
                         <v-form>
