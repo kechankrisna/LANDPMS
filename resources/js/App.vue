@@ -29,4 +29,7 @@
     .border-blue{
        border-color: #2196F3 !important;
     }
+    .centered-input input, .text-center{
+      text-align: center;
+    }
 </style>

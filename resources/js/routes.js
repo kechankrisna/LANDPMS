@@ -78,6 +78,63 @@ const router = new VueRouter({
                         requiresAuth: true
                     }
                 },
+                {
+                    path: "/incomes",
+                    name: "incomes",
+                    component: () => import("./pages/Incomes.vue"),
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: "/expenses",
+                    name: "expenses",
+                    component: () => import("./pages/Expenses.vue"),
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: "/reports",
+                    name: "reports",
+                    component: () => import("./pages/Reports.vue"),
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: "/users",
+                    name: "users",
+                    component: () => import("./pages/Users.vue"),
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: "/clients",
+                    name: "clients",
+                    component: () => import("./pages/Clients.vue"),
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: "/lands",
+                    name: "lands",
+                    component: () => import("./pages/Lands.vue"),
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: "/settings",
+                    name: "settings",
+                    component: () => import("./pages/Settings.vue"),
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+
                 { path: "*", component: () => import("./pages/NotFound.vue") }
             ]
         }

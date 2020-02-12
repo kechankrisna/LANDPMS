@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'active', 'activation_token', 'avatar'
+        'name', 'email', 'password', 'active', 'activation_token', 'avatar', 'isAdmin'
     ];
 
     protected $appends = ['avatar_url'];
@@ -48,6 +48,14 @@ class User extends Authenticatable
 
     public function references(){
         return $this->hasMany('App\User', 'reference_id', 'id');
+    }
+
+    public function children(){
+        return $this->hasMany('App\User', 'reference_id', 'id');
+    }
+
+    public function clients(){
+        return $this->hasMany('App\Client', 'user_id', 'id');
     }
 
     

@@ -48,7 +48,11 @@ import vuetify from './plugins/vuetify';
 import i18n from './plugins/i18n';
 import Axios from 'axios';
 import VMdDateRangePicker from "v-md-date-range-picker";
+import VueRandomColor from 'vue-randomcolor'
+import moment from 'moment'
+
 Vue.use(VMdDateRangePicker);
+Vue.use(VueRandomColor);
 
 Vue.config.productionTip = false
 
@@ -67,6 +71,7 @@ if (typeof token != "undefined" && typeof token_type != "undefined") {
 Vue.use(Vuex);
 
 Vue.prototype.$http = Axios
+Vue.prototype.moment = moment
 
 
 
@@ -75,6 +80,5 @@ const app = new Vue({
     store,
     router,
     vuetify,
-
     components: { App },
 });

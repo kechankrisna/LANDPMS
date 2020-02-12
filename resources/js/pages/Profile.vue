@@ -1,23 +1,18 @@
 <template>
 <v-app>
-    
-
-     <v-container fluid fill-height class="ma-0 pa-0">
+     <v-container class="ma-0 pa-1" fluid>
         <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
-        <v-layout align-center justify-center>
-            <v-col cols="12" sm="4">
-                <v-container style="text-align:center;">
-                    <v-avatar
-                        :size="300"
-                        color="red"
-                    >
-                        <img src="https://i.picsum.photos/id/1/300/300.jpg" alt="alt">
-                    </v-avatar>
-                    <v-btn class="ma-5" color="success">{{$t("form.upload")}}</v-btn>
-                </v-container>
-            </v-col>
-            <v-col cols="12" sm="4">
+        <v-row align-center >
+            <v-col cols="12" lg="5" sm="12">
                 <v-tabs v-model="tab" color="primary" slider-color="primary">
+                    <v-tab>
+                        {{ $t("revenues") }}
+                    </v-tab>
+
+                    <v-tab>
+                        {{ $t("clients") }}
+                    </v-tab>
+
                     <v-tab>
                         {{ $t("form.information") }}
                     </v-tab>
@@ -26,7 +21,150 @@
                     </v-tab>
 
                     <v-tab-item>
-                        <v-card elevation="1" class="mt-12 my-auto mx-auto">
+
+                        <v-card class="mt-3">
+                            <v-card-text>
+                                <v-list-item>
+                                    <v-list-item-action>
+                                         <v-icon>mdi-currency-usd</v-icon>
+                                    </v-list-item-action>
+                                   <v-list-item-content>
+                                       <v-list-item-title>
+                                           <span class="font-weight-bold red--text">{{totalRevenue}}</span>
+                                       </v-list-item-title>
+                                       <v-list-item-subtitle>
+                                           {{ $t("Total Earned") }}
+                                       </v-list-item-subtitle>
+                                   </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-action>
+                                         <v-icon>mdi-bank</v-icon>
+                                    </v-list-item-action>
+                                   <v-list-item-content>
+                                       <v-list-item-title>
+                                           <span class="font-weight-bold green--text">{{totalReceived}}</span>
+                                       </v-list-item-title>
+                                       <v-list-item-subtitle>
+                                           {{ $t("Total Received") }}
+                                       </v-list-item-subtitle>
+                                   </v-list-item-content>
+                                </v-list-item>
+
+                            </v-card-text>
+                        </v-card>
+
+                        <v-card class="mt-3" >
+                            <v-card-title primary-title>
+                                {{ $t("Received") }}
+                            </v-card-title>
+                            <v-card-text>
+                                <v-simple-table>
+                                    <template v-slot:default>
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">
+                                                    {{ $t("form.title") }}
+                                                </th>
+                                                <th class="text-left">
+                                                    {{ $t("land") }}
+                                                </th>
+                                                <th class="text-left">
+                                                    {{ $t("form.amount") }}
+                                                </th>
+                                                <th class="text-left">
+                                                    {{ $t("form.date") }}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                v-for="received in receiveds"
+                                                :key="received.id"
+                                            >
+                                                <td>{{ received.title }}</td>
+                                                <td>{{ received.land }} ( {{ received.location }} )</td>
+                                                <td> <span class="green--text">{{ received.amount }}</span></td>
+                                                <td style="min-width:150px;" >{{ received.paid_at ? moment(received.paid_at).format("LL") : '' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </template>
+                                </v-simple-table>
+                            </v-card-text>
+                        </v-card>
+                        
+
+                        <v-card class="mt-3">
+                            <v-card-title primary-title>
+                                {{ $t("Total Earned") }}
+                            </v-card-title>
+                            <v-card-text>
+                                <v-simple-table>
+                                    <template v-slot:default>
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">
+                                                    {{ $t("land") }}
+                                                </th>
+                                                <th class="text-left">
+                                                    {{ $t("client") }}
+                                                </th>
+                                                <th class="text-left">
+                                                    {{ $t("form.amount") }}
+                                                </th>
+                                                <th class="text-left">
+                                                    {{ $t("form.date") }}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                v-for="revenue in revenues"
+                                                :key="revenue.id"
+                                            >
+                                                <td>{{ revenue.land }} <br> ( {{ revenue.location }} ) </td>
+                                                <td>{{ revenue.client }}</td>
+                                                <td> <span class="blue--text">{{ revenue.amount }}</span></td>
+                                                
+                                                <td style="min-width:150px;" >{{ revenue.sold_at ? moment(revenue.sold_at).format("LL") : '' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </template>
+                                </v-simple-table>
+                            </v-card-text>
+                        </v-card>
+
+                        
+                        
+                    
+                    </v-tab-item>
+
+                    <v-tab-item>
+                        <v-card>
+                            <v-card-text>
+                                <v-simple-table>
+                                    <template v-slot:default>
+                                    <thead>
+                                        <tr>
+                                        <th class="text-left"> {{$t('form.name')}} </th>
+                                        <th class="text-left"> {{$t('form.phone')}} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="client in datas.clients" :key="client.id">
+                                        <td>{{ client.name }}</td>
+                                        <td>{{ client.phone }}</td>
+                                        </tr>
+                                    </tbody>
+                                    </template>
+                                </v-simple-table>
+                            </v-card-text>
+                        </v-card>
+                    </v-tab-item>
+
+                    <v-tab-item>
+                        <v-card>
                             <v-card-text>
                                 <v-form>
                                     <v-text-field
@@ -64,7 +202,7 @@
                     </v-tab-item>
 
                     <v-tab-item>
-                        <v-card elevation="1" class="mt-12 my-auto mx-auto">
+                        <v-card>
                             <v-card-text>
                                 <v-form>
                                     <v-text-field
@@ -106,7 +244,16 @@
 
                 </v-tabs>
             </v-col>
-        </v-layout>
+
+            <v-col cols="12" lg="7" sm="12">
+                <v-card >
+                    <v-card-text>
+                        <organization-chart pan zoom :datasource="datas"></organization-chart>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+
+        </v-row>
 
         <v-snackbar :color="isError ? 'error' : 'success'" v-model="snackbar">
             {{ message }}
@@ -119,7 +266,16 @@
 </template>
 
 <script>
+
+import Vue from 'vue'
+import OrganizationChart from 'vue-organization-chart'
+import 'vue-organization-chart/dist/orgchart.css'
+
+
 export default {
+    components:{
+        OrganizationChart,
+    },
     data() {
         return {
             loading:false,
@@ -128,11 +284,19 @@ export default {
             message:null,
             tab: 0,
             formInformation: {},
-            formPassword: {}
+            formPassword: {},
+            datas: {},
+            revenues:[],
+            receiveds:[],
+            totalReceived:0.00,
+            totalRevenue:0.00,
         };
     },
     mounted() {
         this.init();
+        this.initMember();
+        this.initReceiveds();
+        this.initRevenues();
     },
 
     methods: {
@@ -158,10 +322,52 @@ export default {
                 password_confirmation: ""
             };
         },
-        onUploadAvatar(){},
-        onSaveAvatar(){
-
+        
+       initMember(){
+            var user = JSON.parse(localStorage.getItem('user'));
+            var url = `/api/users/${user.id}/members`;
+            axios.get(url).then((result) => {
+            console.log(result.data);
+            this.datas = result.data.data;
+            }).catch((err) => {
+            console.log(err);
+            });
         },
+        
+        initRevenues(){
+            var user = JSON.parse(localStorage.getItem('user'));
+            var url = `/api/users/${user.id}/revenues`;
+            axios.get(url).then((result) => {
+                // console.log(result.data);
+                if(result.data.length>0){
+                    result.data.forEach(r => {
+                        this.totalRevenue += parseFloat(r.amount);
+                    });
+                }
+                this.revenues = result.data;
+            }).catch((err) => {
+                // console.log(err);
+            });
+        },
+
+        initReceiveds(){
+            var user = JSON.parse(localStorage.getItem('user'));
+            var url = `/api/users/${user.id}/receiveds`;
+            axios.get(url).then((result) => {
+                // console.log(result.data);
+                if(result.data.length>0){
+                    result.data.forEach(r => {
+                        this.totalReceived += parseFloat(r.amount);
+                    });
+                }
+                this.receiveds = result.data;
+            }).catch((err) => {
+                // console.log(err);
+            });
+        },
+
+
+
         onSaveInformation() {
             axios.post(`/api/auth/updateinformation`, this.formInformation)
             .then((result) => {
@@ -205,7 +411,9 @@ export default {
                  this.message = this.$t('passwords.notmatch');
             }
 
-        }
+        },
+
+        
     }
 };
 </script>

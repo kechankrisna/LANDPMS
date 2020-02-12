@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('reference_id')->nullable(true)->default(null);
             $table->string('phone')->nullable(true)->default(null);
             $table->string('avatar')->nullable(true)->default(null);
+            $table->boolean('isAdmin')->default(false);
             $table->boolean('active')->default(false);
             $table->string('activation_token');
             $table->string('token')->nullable(true)->default(null);

@@ -177,6 +177,7 @@ public function register(Request $request)
         return new ProfileResource($request->user());
     }
 
+    
 
     /**
      * Get the authenticated User

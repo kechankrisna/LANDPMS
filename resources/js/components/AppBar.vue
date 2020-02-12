@@ -2,27 +2,25 @@
     <div>
         <v-navigation-drawer
             v-model="drawer"
-            :mini-variant="mini"
-            mini-variant-width="120"
-            absolute
-            permanent
             app
+            temporary
             clipped
             :width="325"
-            :class="mini ? 'text-center':'text-left'"
+            
         >
-            <v-list>
+            <v-list >
                 <template v-for="(item, index) in items">
                     <v-list-item
                         :key="item.title"
-                        v-model="item.active"
+                        :class=" item.action == currentRoute ? 'v-list-item--active': '' "
                         no-action
                         @click="onMenuClick(item)"
+                        dense
                     >
-                        <v-list-item-action>
+                        <v-list-item-action  >
                             <v-row row wrap>
                                 <v-col class="pb-0" cols="12">
-                                    <v-icon :color="item.iconColor" large>
+                                    <v-icon :color="item.iconColor">
                                         {{ item.iconName }}
                                     </v-icon>
                                 </v-col>
@@ -42,15 +40,14 @@
             </v-list>
         </v-navigation-drawer>
 
-        <v-app-bar app color="primary" dark clipped-left>
+        <v-app-bar app color="primary" dark clipped-left dense >
             <v-app-bar-nav-icon
-                large
-                @click.stop="mini = !mini"
+                @click.stop="drawer = !drawer"
                 
             ></v-app-bar-nav-icon> 
             <!-- class="d-lg-none" -->
             <v-toolbar-title color="primary">
-                <v-toolbar-title>MYLEKHA</v-toolbar-title>
+                <v-toolbar-title>LANDPMS</v-toolbar-title>
             </v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -79,7 +76,7 @@
                 </v-menu>
         </v-app-bar>
 
-        <v-navigation-drawer v-model="enddrawer" absolute temporary right :width="400"  >
+        <!-- <v-navigation-drawer v-model="enddrawer" absolute temporary right :width="400"  >
             <v-list>
                 <v-list-item v-for="(item, index) in 10" :key="index" two-line>
                     <v-list-item-content>
@@ -93,7 +90,7 @@
                     </v-list-item-action>
                 </v-list-item>
             </v-list>
-        </v-navigation-drawer>
+        </v-navigation-drawer> -->
 
         <v-snackbar :color="isError ? 'error' : 'success'" v-model="snackbar">
             {{ message }}
@@ -113,104 +110,63 @@ export default {
     data() {
         return {
             user: {},
-            drawer: true,
+            drawer: false,
             enddrawer:false,
-            mini: true,
+            mini: false,
             snackbar: false,
+            currentRoute: null,
             isError:false,
             message:"",
+            activeRoute:null,
             items: [
                 {
                   iconName: "mdi-home",
                   iconColor: "primary",
-                  action: "home",
-                  title: "Home",
+                  action: "dashboard",
+                  title: this.$t("dashboard"),
                   active:true,
                 },
                 {
                     iconName: "mdi-poll",
                     iconColor: "green",
                     action: "reports",
-                    title: "Reports",
-                    items: [
-                        {
-                            title: "Sales Summary"
-                        },
-                        {
-                            title: "Sales By item"
-                        },
-                        {
-                            title: "Sales By category"
-                        },
-                        {
-                            title: "Sales By employee"
-                        },
-                        {
-                            title: "Sales By Payment type"
-                        },
-                        {
-                            title: "Receipts"
-                        },
-                        {
-                            title: "Sales By Modifier"
-                        },
-                        {
-                            title: "Discounts"
-                        },
-                        {
-                            title: "Taxes"
-                        },
-                        {
-                            title: "Shifts"
-                        }
-                    ]
+                    title: this.$t("reports"),
                 },
                 {
-                    iconName: "mdi-cart",
-                    iconColor: "red",
-                    action: "items",
-                    title: "Items",
-                    items: [
-                        { title: "Item list" },
-                        { title: "Categories" },
-                        { title: "Modifiers" },
-                        { title: "Discounts" }
-                    ]
-                },
-                {
-                    iconName: "mdi-cart-arrow-right",
+                    iconName: "mdi-cash-100",
                     iconColor: "blue",
-                    action: "Inventories",
-                    title: "Inventory management",
-                    items: [
-                        { title: "Count stock" },
-                        { title: "Suppliers" },
-                        { title: "Vendors" }
-                    ]
+                    action: "incomes",
+                    title: this.$t("incomes"),
                 },
                 {
-                    iconName: "mdi-contact-mail",
-                    iconColor: "#009688",
-                    action: "employess",
-                    title: "Employees",
-                    items: [
-                        { title: "Employee List" },
-                        { title: "Access rights" }
-                    ]
+                    iconName: "mdi-currency-usd",
+                    iconColor: "purple",
+                    action: "expenses",
+                    title: this.$t("expenses"),
+                },
+                {
+                    iconName: "mdi-map",
+                    iconColor: "red",
+                    action: "lands",
+                    title: this.$t("lands"),
                 },
                 {
                     iconName: "mdi-account-multiple",
                     iconColor: "purple",
-                    action: "customers",
-                    title: "Customers",
-                    items: []
+                    action: "clients",
+                    title: this.$t("clients"),
+                },
+                {
+                    iconName: "mdi-contact-mail",
+                    iconColor: "#009688",
+                    action: "users",
+                    title: this.$t("users"),
                 },
                 {
                     iconName: "mdi-settings",
                     iconColor: "grey",
                     action: "settings",
-                    title: "Settings",
-                    items: []
+                    title: this.$t("settings"),
                 }
             ],
             notifications:[]
@@ -221,6 +177,10 @@ export default {
         this.getUser();
     },
 
+    mounted() {
+        this.currentRoute = this.$router.currentRoute.name;
+    },
+
     methods: {
         onOpenNotification(){
             this.enddrawer = !this.enddrawer;
@@ -229,6 +189,10 @@ export default {
             this.user = JSON.parse(localStorage.getItem('user'));
         },
         onMenuClick(item){
+            this.currentRoute = item.action;
+            this.$router.push({'name': item.action, replace: true,}).catch(error => {
+                console.log(error);
+            });
         },
         onLogout(){
             this.$store
