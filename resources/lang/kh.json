@@ -76,6 +76,9 @@
     "form.active": "ប្រើបាន",
     "form.admin": "រដ្ឋបាល",
     "form.date":"កាលបរិច្ឆេត",
+    "form.created_at":"ថ្ងៃបង្កើត",
+    "form.updated_at":"ថ្ងៃកែប្រែ",
+    "form.deleted_at":"ថ្ងៃលុបចេញ",
     
     "language": "ភាសារ",
     "income": "ចំនូល",

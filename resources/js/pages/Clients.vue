@@ -144,13 +144,13 @@
                                                 color="blue darken-1"
                                                 text
                                                 @click="close"
-                                                >Cancel</v-btn
+                                                >{{$t('form.cancel')}}</v-btn
                                             >
                                             <v-btn
                                                 color="blue darken-1"
                                                 text
                                                 @click="onSaveClient"
-                                                >Save</v-btn
+                                                >{{$t('form.save')}}</v-btn
                                             >
                                         </v-card-actions>
                                     </v-card>

@@ -29,6 +29,10 @@ Route::group(['prefix' => 'auth',], function () {
         Route::post('updatepassword', 'AuthController@updatePassword');
 
         Route::post('sendverify', 'AuthController@sendverify');
+
+        Route::get('/{user}/members/',  'UserController@members')->name('profile.getmember');
+        Route::get('/{user}/revenues/',  'UserController@revenues')->name('profile.revenues');
+        Route::get('/{user}/receiveds/',  'UserController@receiveds')->name('profile.receiveds');
         
     });
 });
@@ -49,7 +53,7 @@ Route::group(['prefix' => 'password',], function () {
  * complete income REST api
  */
 
-Route::group(['prefix' => 'incomes', 'middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'incomes', 'middleware' => ['auth:api', 'administration'] ], function () {
 
     Route::get('/', 'IncomeController@index')->name('income.all');
     Route::post('/', 'IncomeController@store')->name('income.create');
@@ -63,7 +67,7 @@ Route::group(['prefix' => 'incomes', 'middleware' => 'auth:api'], function () {
  * complete expense REST api
  */
 
-Route::group(['prefix' => 'expenses', 'middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'expenses', 'middleware' => ['auth:api', 'administration'] ], function () {
 
     Route::get('/', 'ExpenseController@index')->name('expense.all');
     Route::post('/', 'ExpenseController@store')->name('expense.create');
@@ -78,7 +82,7 @@ Route::group(['prefix' => 'expenses', 'middleware' => 'auth:api'], function () {
  * complete location REST api
  */
 
-Route::group(['prefix' => 'locations', 'middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'locations', 'middleware' => ['auth:api', 'administration'] ], function () {
 
     Route::get('/', 'LocationController@index')->name('location.all');
     Route::get('/selections', 'LocationController@selections')->name('location.selections');
@@ -93,7 +97,7 @@ Route::group(['prefix' => 'locations', 'middleware' => 'auth:api'], function () 
  * complete land REST api
  */
 
-Route::group(['prefix' => 'lands', 'middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'lands', 'middleware' => ['auth:api', 'administration'] ], function () {
 
     Route::get('/', 'LandController@index')->name('land.all');
     Route::post('/', 'LandController@store')->name('land.create');
@@ -120,7 +124,7 @@ Route::group(['prefix' => 'settings', 'middleware' => ['auth:api', 'administrati
  * complete user REST api
  */
 
-Route::group(['prefix' => 'users', 'middleware' => ['auth:api', 'administration']], function () {
+Route::group(['prefix' => 'users', 'middleware' => ['auth:api', 'administration'] ], function () {
     
     Route::get('/',  'UserController@index')->name('user.all');
     Route::get('/selections',  'UserController@selections')->name('user.selections');
@@ -141,7 +145,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth:api', 'administration'
  * complete client REST api
  */
 
-Route::group(['prefix' => 'clients', 'middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'clients', 'middleware' => ['auth:api', 'administration'] ], function () {
 
     Route::get('/', 'ClientController@index')->name('client.all');
     Route::get('/selections',  'ClientController@selections')->name('client.selections');
@@ -158,7 +162,7 @@ Route::group(['prefix' => 'clients', 'middleware' => 'auth:api'], function () {
  * complete report REST api
  */
 
-Route::group(['prefix' => 'reports', 'middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'reports', 'middleware' => ['auth:api', 'administration'] ], function () {
 
     Route::get('/', 'ReportController@index')->name('report.all'); 
     Route::get('/statement', 'ReportController@statement')->name('report.statement'); //

@@ -76,6 +76,9 @@
     "form.active": "active",
     "form.admin": "admin",
     "form.date":"Date",
+    "form.created_at":"Created at",
+    "form.updated_at":"Updated at",
+    "form.deleted_at":"Deleted at",
     
     "language": "Language",
     "income": "Income",

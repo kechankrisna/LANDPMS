@@ -42,6 +42,7 @@
 
         <v-app-bar app color="primary" dark clipped-left dense >
             <v-app-bar-nav-icon
+                v-show="isAdmin == true"
                 @click.stop="drawer = !drawer"
                 
             ></v-app-bar-nav-icon> 
@@ -109,6 +110,7 @@ export default {
     },
     data() {
         return {
+            isAdmin:false,
             user: {},
             drawer: false,
             enddrawer:false,
@@ -187,6 +189,7 @@ export default {
         },
         getUser(){
             this.user = JSON.parse(localStorage.getItem('user'));
+            this.isAdmin = localStorage.getItem('isAdmin');
         },
         onMenuClick(item){
             this.currentRoute = item.action;

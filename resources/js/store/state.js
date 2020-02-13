@@ -5,6 +5,7 @@ const state = {
     messages:null,
     user: {},
     status: null,
+    isAdmin:false,
 }
 
 export default state;

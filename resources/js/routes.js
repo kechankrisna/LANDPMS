@@ -42,7 +42,8 @@ const router = new VueRouter({
                     name: "dashboard",
                     component: () => import("./pages/Dashboard.vue"),
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        isAdmin:true,
                     }
                 },
                 {
@@ -83,7 +84,8 @@ const router = new VueRouter({
                     name: "incomes",
                     component: () => import("./pages/Incomes.vue"),
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        isAdmin:true,
                     }
                 },
                 {
@@ -91,7 +93,8 @@ const router = new VueRouter({
                     name: "expenses",
                     component: () => import("./pages/Expenses.vue"),
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        isAdmin:true,
                     }
                 },
                 {
@@ -99,7 +102,8 @@ const router = new VueRouter({
                     name: "reports",
                     component: () => import("./pages/Reports.vue"),
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        isAdmin:true,
                     }
                 },
                 {
@@ -107,7 +111,8 @@ const router = new VueRouter({
                     name: "users",
                     component: () => import("./pages/Users.vue"),
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        isAdmin:true,
                     }
                 },
                 {
@@ -115,7 +120,8 @@ const router = new VueRouter({
                     name: "clients",
                     component: () => import("./pages/Clients.vue"),
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        isAdmin:true,
                     }
                 },
                 {
@@ -123,7 +129,8 @@ const router = new VueRouter({
                     name: "lands",
                     component: () => import("./pages/Lands.vue"),
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        isAdmin:true,
                     }
                 },
                 {
@@ -131,7 +138,8 @@ const router = new VueRouter({
                     name: "settings",
                     component: () => import("./pages/Settings.vue"),
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        isAdmin:true,
                     }
                 },
 
@@ -143,13 +151,31 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
+        
         if (store.getters.isLoggedIn) {
-            next();
-            return;
+            const isAdmin = localStorage.getItem('isAdmin');
+            // next();
+            // return;
+
+            if (to.matched.some(record => record.meta.isAdmin)) {
+                if(isAdmin != 1){
+                    next('/profile');
+                    return;
+                }
+                next();
+                return;
+            }else{
+                next();
+                return;
+            }
+
+        }else{
+            next("/login");
         }
-        next("/login");
+        
     } else {
         next();
+        return;
     }
 });
 

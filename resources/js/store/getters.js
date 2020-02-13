@@ -6,6 +6,7 @@ const getters = {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
     messages: state => state.messages,
+    isAdmin: state => state.isAdmin,
     
 }
 

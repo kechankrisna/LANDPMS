@@ -325,7 +325,7 @@ export default {
         
        initMember(){
             var user = JSON.parse(localStorage.getItem('user'));
-            var url = `/api/users/${user.id}/members`;
+            var url = `/api/auth/${user.id}/members`;
             axios.get(url).then((result) => {
             console.log(result.data);
             this.datas = result.data.data;
@@ -336,7 +336,7 @@ export default {
         
         initRevenues(){
             var user = JSON.parse(localStorage.getItem('user'));
-            var url = `/api/users/${user.id}/revenues`;
+            var url = `/api/auth/${user.id}/revenues`;
             axios.get(url).then((result) => {
                 // console.log(result.data);
                 if(result.data.length>0){
@@ -352,7 +352,7 @@ export default {
 
         initReceiveds(){
             var user = JSON.parse(localStorage.getItem('user'));
-            var url = `/api/users/${user.id}/receiveds`;
+            var url = `/api/auth/${user.id}/receiveds`;
             axios.get(url).then((result) => {
                 // console.log(result.data);
                 if(result.data.length>0){
