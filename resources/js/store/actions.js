@@ -31,7 +31,7 @@ const login = ({ commit }, user) => {
                 localStorage.setItem('token', token)
                 localStorage.setItem('token_type', token_type)
                 localStorage.setItem('user', JSON.stringify(user))
-                localStorage.setItem('isAdmin', JSON.stringify(user.isAdmin))
+                localStorage.setItem('isAdmin', user.isAdmin)
 
                 axios.defaults.headers.common['Authorization'] = token_type + " " + token
                 commit('AUTH_SUCCESS', { "token": token, "token_type": token_type, "user": user, "messages": "Successfully logged in!" })
@@ -62,7 +62,7 @@ const register = ({ commit }, user) => {
                 localStorage.setItem('token', token)
                 localStorage.setItem('token_type', token_type)
                 localStorage.setItem('user', JSON.stringify(user))
-                localStorage.setItem('isAdmin', JSON.stringify(user.isAdmin))
+                localStorage.setItem('isAdmin', user.isAdmin)
 
                 axios.defaults.headers.common['Authorization'] = token_type + " " + token
                 commit('AUTH_SUCCESS', { "token": token, "token_type": token_type, "user": user, "messages": "Registerd successfully!" })
