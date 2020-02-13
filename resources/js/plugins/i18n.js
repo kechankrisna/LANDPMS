@@ -16,8 +16,9 @@ Vue.i18n.add('kh', khmerTranslation);
 
 const defaultLang = "en";
 let lang = localStorage.getItem('lang');
-if(typeof lang != "undefined"){
+if(lang != null){
     Vue.i18n.set(lang);
+    localStorage.setItem('lang', lang);
 }else{
     Vue.i18n.set(defaultLang);
     localStorage.setItem('lang', defaultLang);
