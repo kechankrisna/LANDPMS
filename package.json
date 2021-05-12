@@ -32,7 +32,7 @@
         "webpack-livereload-plugin": "^2.2.0"
     },
     "dependencies": {
-        "chart.js": "^2.9.3",
+        "chart.js": "^2.9.4",
         "date-fns": "^2.9.0",
         "js2excel": "^1.0.1",
         "moment": "^2.24.0",
