@@ -35,7 +35,7 @@
         "chart.js": "^2.9.3",
         "date-fns": "^2.9.0",
         "js2excel": "^1.0.1",
-        "moment": "^2.24.0",
+        "moment": "^2.29.2",
         "randomcolor": "^0.5.4",
         "v-md-date-range-picker": "^2.6.0",
         "vue-chartjs": "^3.5.0",
